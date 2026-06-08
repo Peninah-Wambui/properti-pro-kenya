@@ -9,13 +9,53 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TenantRouteImport } from './routes/tenant'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as RentsRouteImport } from './routes/rents'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as PropertiesRouteImport } from './routes/properties'
+import { Route as MessagesRouteImport } from './routes/messages'
+import { Route as MaintenanceRouteImport } from './routes/maintenance'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as TenantIndexRouteImport } from './routes/tenant.index'
+import { Route as TenantPaymentsRouteImport } from './routes/tenant.payments'
+import { Route as TenantMaintenanceRouteImport } from './routes/tenant.maintenance'
 
+const TenantRoute = TenantRouteImport.update({
+  id: '/tenant',
+  path: '/tenant',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RentsRoute = RentsRouteImport.update({
+  id: '/rents',
+  path: '/rents',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PropertiesRoute = PropertiesRouteImport.update({
+  id: '/properties',
+  path: '/properties',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MessagesRoute = MessagesRouteImport.update({
+  id: '/messages',
+  path: '/messages',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MaintenanceRoute = MaintenanceRouteImport.update({
+  id: '/maintenance',
+  path: '/maintenance',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -23,49 +63,186 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TenantIndexRoute = TenantIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => TenantRoute,
+} as any)
+const TenantPaymentsRoute = TenantPaymentsRouteImport.update({
+  id: '/payments',
+  path: '/payments',
+  getParentRoute: () => TenantRoute,
+} as any)
+const TenantMaintenanceRoute = TenantMaintenanceRouteImport.update({
+  id: '/maintenance',
+  path: '/maintenance',
+  getParentRoute: () => TenantRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
+  '/maintenance': typeof MaintenanceRoute
+  '/messages': typeof MessagesRoute
+  '/properties': typeof PropertiesRoute
   '/register': typeof RegisterRoute
+  '/rents': typeof RentsRoute
+  '/settings': typeof SettingsRoute
+  '/tenant': typeof TenantRouteWithChildren
+  '/tenant/maintenance': typeof TenantMaintenanceRoute
+  '/tenant/payments': typeof TenantPaymentsRoute
+  '/tenant/': typeof TenantIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
+  '/maintenance': typeof MaintenanceRoute
+  '/messages': typeof MessagesRoute
+  '/properties': typeof PropertiesRoute
   '/register': typeof RegisterRoute
+  '/rents': typeof RentsRoute
+  '/settings': typeof SettingsRoute
+  '/tenant/maintenance': typeof TenantMaintenanceRoute
+  '/tenant/payments': typeof TenantPaymentsRoute
+  '/tenant': typeof TenantIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
+  '/maintenance': typeof MaintenanceRoute
+  '/messages': typeof MessagesRoute
+  '/properties': typeof PropertiesRoute
   '/register': typeof RegisterRoute
+  '/rents': typeof RentsRoute
+  '/settings': typeof SettingsRoute
+  '/tenant': typeof TenantRouteWithChildren
+  '/tenant/maintenance': typeof TenantMaintenanceRoute
+  '/tenant/payments': typeof TenantPaymentsRoute
+  '/tenant/': typeof TenantIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/register'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/login'
+    | '/maintenance'
+    | '/messages'
+    | '/properties'
+    | '/register'
+    | '/rents'
+    | '/settings'
+    | '/tenant'
+    | '/tenant/maintenance'
+    | '/tenant/payments'
+    | '/tenant/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/register'
-  id: '__root__' | '/' | '/login' | '/register'
+  to:
+    | '/'
+    | '/dashboard'
+    | '/login'
+    | '/maintenance'
+    | '/messages'
+    | '/properties'
+    | '/register'
+    | '/rents'
+    | '/settings'
+    | '/tenant/maintenance'
+    | '/tenant/payments'
+    | '/tenant'
+  id:
+    | '__root__'
+    | '/'
+    | '/dashboard'
+    | '/login'
+    | '/maintenance'
+    | '/messages'
+    | '/properties'
+    | '/register'
+    | '/rents'
+    | '/settings'
+    | '/tenant'
+    | '/tenant/maintenance'
+    | '/tenant/payments'
+    | '/tenant/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DashboardRoute: typeof DashboardRoute
   LoginRoute: typeof LoginRoute
+  MaintenanceRoute: typeof MaintenanceRoute
+  MessagesRoute: typeof MessagesRoute
+  PropertiesRoute: typeof PropertiesRoute
   RegisterRoute: typeof RegisterRoute
+  RentsRoute: typeof RentsRoute
+  SettingsRoute: typeof SettingsRoute
+  TenantRoute: typeof TenantRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/tenant': {
+      id: '/tenant'
+      path: '/tenant'
+      fullPath: '/tenant'
+      preLoaderRoute: typeof TenantRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rents': {
+      id: '/rents'
+      path: '/rents'
+      fullPath: '/rents'
+      preLoaderRoute: typeof RentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/register': {
       id: '/register'
       path: '/register'
       fullPath: '/register'
       preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/properties': {
+      id: '/properties'
+      path: '/properties'
+      fullPath: '/properties'
+      preLoaderRoute: typeof PropertiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/messages': {
+      id: '/messages'
+      path: '/messages'
+      fullPath: '/messages'
+      preLoaderRoute: typeof MessagesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/maintenance': {
+      id: '/maintenance'
+      path: '/maintenance'
+      fullPath: '/maintenance'
+      preLoaderRoute: typeof MaintenanceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -75,6 +252,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -82,14 +266,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tenant/': {
+      id: '/tenant/'
+      path: '/'
+      fullPath: '/tenant/'
+      preLoaderRoute: typeof TenantIndexRouteImport
+      parentRoute: typeof TenantRoute
+    }
+    '/tenant/payments': {
+      id: '/tenant/payments'
+      path: '/payments'
+      fullPath: '/tenant/payments'
+      preLoaderRoute: typeof TenantPaymentsRouteImport
+      parentRoute: typeof TenantRoute
+    }
+    '/tenant/maintenance': {
+      id: '/tenant/maintenance'
+      path: '/maintenance'
+      fullPath: '/tenant/maintenance'
+      preLoaderRoute: typeof TenantMaintenanceRouteImport
+      parentRoute: typeof TenantRoute
+    }
   }
 }
 
+interface TenantRouteChildren {
+  TenantMaintenanceRoute: typeof TenantMaintenanceRoute
+  TenantPaymentsRoute: typeof TenantPaymentsRoute
+  TenantIndexRoute: typeof TenantIndexRoute
+}
+
+const TenantRouteChildren: TenantRouteChildren = {
+  TenantMaintenanceRoute: TenantMaintenanceRoute,
+  TenantPaymentsRoute: TenantPaymentsRoute,
+  TenantIndexRoute: TenantIndexRoute,
+}
+
+const TenantRouteWithChildren =
+  TenantRoute._addFileChildren(TenantRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DashboardRoute: DashboardRoute,
   LoginRoute: LoginRoute,
+  MaintenanceRoute: MaintenanceRoute,
+  MessagesRoute: MessagesRoute,
+  PropertiesRoute: PropertiesRoute,
   RegisterRoute: RegisterRoute,
+  RentsRoute: RentsRoute,
+  SettingsRoute: SettingsRoute,
+  TenantRoute: TenantRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
