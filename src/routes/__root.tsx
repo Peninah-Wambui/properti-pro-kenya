@@ -77,14 +77,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Rentik — Property Management for Kenya" },
+      { name: "description", content: "Modern property management for Kenyan landlords and tenants." },
+      { name: "author", content: "Rentik" },
+      { property: "og:title", content: "Rentik — Property Management for Kenya" },
+      { property: "og:description", content: "Modern property management for Kenyan landlords and tenants." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
