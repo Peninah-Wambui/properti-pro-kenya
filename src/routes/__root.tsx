@@ -84,6 +84,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:description", content: "Modern property management for Kenyan landlords and tenants." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
+      { name: "twitter:title", content: "Rentik — Property Management for Kenya" },
+      { name: "twitter:description", content: "Modern property management for Kenyan landlords and tenants." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/70311445-06a9-4226-beb3-a76a18551d10" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/70311445-06a9-4226-beb3-a76a18551d10" },
     ],
     links: [
       {
