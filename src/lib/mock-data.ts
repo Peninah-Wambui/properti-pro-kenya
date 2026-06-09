@@ -67,6 +67,50 @@ export interface MaintenanceRequest {
   assignedTo?: string;
 }
 
+export interface Lease {
+  id: string;
+  tenantId: string;
+  tenantName: string;
+  tenantEmail: string;
+  tenantPhone: string;
+  unitLabel: string;
+  propertyName: string;
+  rent: number;
+  deposit: number;
+  startDate: string; // ISO
+  endDate: string; // ISO
+  status: "active" | "ending_soon" | "expired";
+  documents: { name: string; size: string }[];
+  notes?: string;
+}
+
+export type ExpenseCategory =
+  | "Repairs"
+  | "Utilities"
+  | "Cleaning"
+  | "Security"
+  | "Taxes"
+  | "Insurance"
+  | "Other";
+
+export interface Expense {
+  id: string;
+  date: string; // ISO
+  propertyName: string;
+  category: ExpenseCategory;
+  vendor: string;
+  amount: number;
+  description: string;
+}
+
+export interface Vendor {
+  id: string;
+  name: string;
+  trade: string;
+  phone: string;
+  rating: number; // 1-5
+}
+
 export interface SmsMessage {
   id: string;
   to: string;
@@ -422,3 +466,140 @@ export function formatDate(iso: string): string {
     day: "numeric",
   });
 }
+
+export const VENDORS: Vendor[] = [
+  { id: "v-1", name: "Nairobi Plumbing Co.", trade: "Plumbing", phone: "+254 720 111 222", rating: 4.8 },
+  { id: "v-2", name: "Cool Air HVAC", trade: "HVAC", phone: "+254 733 444 555", rating: 4.6 },
+  { id: "v-3", name: "SafeLock Locksmiths", trade: "Locksmith", phone: "+254 712 999 000", rating: 4.7 },
+  { id: "v-4", name: "Bright Spark Electric", trade: "Electrical", phone: "+254 700 888 111", rating: 4.9 },
+  { id: "v-5", name: "GreenClean Services", trade: "Cleaning", phone: "+254 722 333 666", rating: 4.4 },
+  { id: "v-6", name: "BuildRight Carpentry", trade: "Carpentry", phone: "+254 711 555 888", rating: 4.5 },
+];
+
+export const LEASES: Lease[] = [
+  {
+    id: "lease-1",
+    tenantId: "u-david",
+    tenantName: "David Kariuki",
+    tenantEmail: "david@email.com",
+    tenantPhone: "+254 711 223 344",
+    unitLabel: "Unit 5",
+    propertyName: "Riverside Apartments",
+    rent: 15000,
+    deposit: 30000,
+    startDate: "2024-01-15T00:00:00Z",
+    endDate: "2026-01-14T00:00:00Z",
+    status: "active",
+    documents: [
+      { name: "Lease Agreement.pdf", size: "412 KB" },
+      { name: "ID Copy - David.pdf", size: "168 KB" },
+    ],
+    notes: "Tenant pays via M-Pesa. Always prompt.",
+  },
+  {
+    id: "lease-2",
+    tenantId: "u-grace",
+    tenantName: "Grace Wanjiru",
+    tenantEmail: "grace@email.com",
+    tenantPhone: "+254 733 556 778",
+    unitLabel: "Unit 12",
+    propertyName: "Downtown Studios",
+    rent: 20000,
+    deposit: 40000,
+    startDate: "2023-06-01T00:00:00Z",
+    endDate: "2025-05-31T00:00:00Z",
+    status: "active",
+    documents: [
+      { name: "Lease Agreement.pdf", size: "398 KB" },
+      { name: "Employer Letter.pdf", size: "92 KB" },
+      { name: "ID Copy - Grace.pdf", size: "201 KB" },
+    ],
+  },
+  {
+    id: "lease-3",
+    tenantId: "u-peter",
+    tenantName: "Peter Omondi",
+    tenantEmail: "peter@email.com",
+    tenantPhone: "+254 700 998 877",
+    unitLabel: "Unit 8",
+    propertyName: "Riverside Apartments",
+    rent: 18000,
+    deposit: 36000,
+    startDate: "2024-03-01T00:00:00Z",
+    endDate: "2025-02-28T00:00:00Z",
+    status: "ending_soon",
+    documents: [{ name: "Lease Agreement.pdf", size: "405 KB" }],
+    notes: "Renewal discussion scheduled for January.",
+  },
+  {
+    id: "lease-4",
+    tenantId: "t-4",
+    tenantName: "Amara Hassan",
+    tenantEmail: "amara@email.com",
+    tenantPhone: "+254 712 654 321",
+    unitLabel: "Unit 3",
+    propertyName: "Riverside Apartments",
+    rent: 18000,
+    deposit: 36000,
+    startDate: "2024-08-01T00:00:00Z",
+    endDate: "2026-07-31T00:00:00Z",
+    status: "active",
+    documents: [{ name: "Lease Agreement.pdf", size: "420 KB" }],
+  },
+  {
+    id: "lease-5",
+    tenantId: "t-6",
+    tenantName: "Alice Muumbi",
+    tenantEmail: "alice@email.com",
+    tenantPhone: "+254 722 765 432",
+    unitLabel: "Unit 15",
+    propertyName: "Green Hill Villas",
+    rent: 25000,
+    deposit: 50000,
+    startDate: "2022-09-01T00:00:00Z",
+    endDate: "2024-08-31T00:00:00Z",
+    status: "expired",
+    documents: [{ name: "Old Lease.pdf", size: "388 KB" }],
+    notes: "Renewed informally — needs new contract signed.",
+  },
+];
+
+export const EXPENSES: Expense[] = [
+  { id: "e-1", date: "2024-12-09T00:00:00Z", propertyName: "Riverside Apartments", category: "Repairs", vendor: "Nairobi Plumbing Co.", amount: 4500, description: "Kitchen tap replacement, Unit 5" },
+  { id: "e-2", date: "2024-12-05T00:00:00Z", propertyName: "Downtown Studios", category: "Utilities", vendor: "Kenya Power", amount: 18200, description: "Common area electricity, November" },
+  { id: "e-3", date: "2024-12-03T00:00:00Z", propertyName: "Green Hill Villas", category: "Security", vendor: "G4S Kenya", amount: 24000, description: "Monthly security guards" },
+  { id: "e-4", date: "2024-11-28T00:00:00Z", propertyName: "Riverside Apartments", category: "Cleaning", vendor: "GreenClean Services", amount: 7800, description: "Bi-weekly common area cleaning" },
+  { id: "e-5", date: "2024-11-20T00:00:00Z", propertyName: "Downtown Studios", category: "Repairs", vendor: "Bright Spark Electric", amount: 12500, description: "Lobby lighting rewire" },
+  { id: "e-6", date: "2024-11-15T00:00:00Z", propertyName: "Riverside Apartments", category: "Taxes", vendor: "KRA", amount: 32000, description: "Rental income tax Q3" },
+  { id: "e-7", date: "2024-11-10T00:00:00Z", propertyName: "Green Hill Villas", category: "Insurance", vendor: "Jubilee Insurance", amount: 15600, description: "Property cover monthly premium" },
+  { id: "e-8", date: "2024-11-01T00:00:00Z", propertyName: "Downtown Studios", category: "Utilities", vendor: "Nairobi Water", amount: 9400, description: "Water bill, October" },
+  { id: "e-9", date: "2024-10-25T00:00:00Z", propertyName: "Riverside Apartments", category: "Repairs", vendor: "BuildRight Carpentry", amount: 6700, description: "Door frame repair, Unit 7" },
+  { id: "e-10", date: "2024-10-15T00:00:00Z", propertyName: "Riverside Apartments", category: "Cleaning", vendor: "GreenClean Services", amount: 7800, description: "Bi-weekly common area cleaning" },
+  { id: "e-11", date: "2024-10-08T00:00:00Z", propertyName: "Green Hill Villas", category: "Repairs", vendor: "Cool Air HVAC", amount: 18200, description: "AC servicing, 3 units" },
+  { id: "e-12", date: "2024-10-03T00:00:00Z", propertyName: "Downtown Studios", category: "Security", vendor: "G4S Kenya", amount: 24000, description: "Monthly security guards" },
+  { id: "e-13", date: "2024-09-20T00:00:00Z", propertyName: "Riverside Apartments", category: "Utilities", vendor: "Kenya Power", amount: 16100, description: "Common area electricity" },
+  { id: "e-14", date: "2024-09-12T00:00:00Z", propertyName: "Green Hill Villas", category: "Other", vendor: "Garden Pros", amount: 5200, description: "Landscaping" },
+  { id: "e-15", date: "2024-09-05T00:00:00Z", propertyName: "Downtown Studios", category: "Repairs", vendor: "SafeLock Locksmiths", amount: 3400, description: "Master key replacement" },
+  { id: "e-16", date: "2024-08-18T00:00:00Z", propertyName: "Riverside Apartments", category: "Insurance", vendor: "Jubilee Insurance", amount: 14800, description: "Monthly premium" },
+  { id: "e-17", date: "2024-08-10T00:00:00Z", propertyName: "Riverside Apartments", category: "Utilities", vendor: "Kenya Power", amount: 15400, description: "Common area electricity" },
+  { id: "e-18", date: "2024-07-22T00:00:00Z", propertyName: "Downtown Studios", category: "Repairs", vendor: "Nairobi Plumbing Co.", amount: 9100, description: "Drain unblocking, multiple units" },
+];
+
+// Monthly revenue trend for charting (last 6 months including current)
+export const REVENUE_TREND = [
+  { month: "Jul", revenue: 268000, expenses: 39800, target: 290000 },
+  { month: "Aug", revenue: 274000, expenses: 41300, target: 290000 },
+  { month: "Sep", revenue: 281000, expenses: 36100, target: 290000 },
+  { month: "Oct", revenue: 295000, expenses: 56200, target: 295000 },
+  { month: "Nov", revenue: 287000, expenses: 78300, target: 295000 },
+  { month: "Dec", revenue: 302000, expenses: 54300, target: 300000 },
+];
+
+export const OCCUPANCY_TREND = [
+  { month: "Jul", occupancy: 78 },
+  { month: "Aug", occupancy: 82 },
+  { month: "Sep", occupancy: 85 },
+  { month: "Oct", occupancy: 84 },
+  { month: "Nov", occupancy: 88 },
+  { month: "Dec", occupancy: 88 },
+];

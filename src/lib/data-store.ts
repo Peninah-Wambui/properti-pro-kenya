@@ -3,9 +3,15 @@ import {
   RENT_RECORDS,
   MAINTENANCE,
   SMS_LOG,
+  LEASES,
+  EXPENSES,
+  VENDORS,
   type RentRecord,
   type MaintenanceRequest,
   type SmsMessage,
+  type Lease,
+  type Expense,
+  type Vendor,
 } from "./mock-data";
 import { subscribe, emit } from "./auth-store";
 
@@ -13,16 +19,15 @@ import { subscribe, emit } from "./auth-store";
 let rents: RentRecord[] = RENT_RECORDS.map((r) => ({ ...r }));
 let maintenance: MaintenanceRequest[] = MAINTENANCE.map((m) => ({ ...m }));
 let sms: SmsMessage[] = SMS_LOG.map((s) => ({ ...s }));
+let leases: Lease[] = LEASES.map((l) => ({ ...l, documents: [...l.documents] }));
+let expenses: Expense[] = EXPENSES.map((e) => ({ ...e }));
 
-export function getRents() {
-  return rents;
-}
-export function getMaintenance() {
-  return maintenance;
-}
-export function getSms() {
-  return sms;
-}
+export function getRents() { return rents; }
+export function getMaintenance() { return maintenance; }
+export function getSms() { return sms; }
+export function getLeases() { return leases; }
+export function getExpenses() { return expenses; }
+export function getVendors(): Vendor[] { return VENDORS; }
 
 export function payRent(rentId: string) {
   const r = rents.find((x) => x.id === rentId);
@@ -69,13 +74,27 @@ export function updateMaintenanceStatus(id: string, status: MaintenanceRequest["
   emit();
 }
 
+export function assignMaintenanceVendor(id: string, vendor: string) {
+  const m = maintenance.find((x) => x.id === id);
+  if (!m) return;
+  m.assignedTo = vendor;
+  if (m.status === "submitted") m.status = "in_progress";
+  m.updatedAt = new Date().toISOString();
+  emit();
+}
+
+export function addExpense(expense: Omit<Expense, "id">) {
+  const newExp: Expense = { ...expense, id: "e-" + Date.now() };
+  expenses = [newExp, ...expenses];
+  emit();
+  return newExp;
+}
+
 export function useStore<T>(selector: () => T): T {
   const [val, setVal] = useState<T>(() => selector());
   useEffect(() => {
     const unsub = subscribe(() => setVal(selector()));
-    return () => {
-      unsub();
-    };
+    return () => { unsub(); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return val;
