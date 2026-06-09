@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import {
   Building2,
-  Users,
   TrendingUp,
   AlertCircle,
   Clock,
@@ -11,8 +10,12 @@ import {
 } from "lucide-react";
 import { RequireAuth } from "@/components/require-auth";
 import { PageHeader } from "@/components/page-header";
-import { PROPERTIES, formatKES } from "@/lib/mock-data";
+import { OnboardingTour } from "@/components/onboarding-tour";
+import { PROPERTIES, formatKES, REVENUE_TREND, OCCUPANCY_TREND } from "@/lib/mock-data";
 import { useStore, getRents } from "@/lib/data-store";
+import {
+  ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid, LineChart, Line,
+} from "recharts";
 
 export const Route = createFileRoute("/dashboard")({
   head: () => ({ meta: [{ title: "Dashboard — Rentik" }] }),

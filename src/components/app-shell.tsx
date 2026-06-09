@@ -7,6 +7,8 @@ import {
   Settings,
   Building2,
   LogOut,
+  FileText,
+  TrendingDown,
 } from "lucide-react";
 import { logout } from "@/lib/auth-store";
 import type { User } from "@/lib/mock-data";
@@ -15,8 +17,10 @@ import { Button } from "@/components/ui/button";
 const landlordNav = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { to: "/properties", label: "Properties", icon: Building2 },
+  { to: "/leases", label: "Leases & Tenants", icon: FileText },
   { to: "/rents", label: "Rent Management", icon: Receipt },
   { to: "/maintenance", label: "Maintenance", icon: Wrench },
+  { to: "/expenses", label: "Expenses & Reports", icon: TrendingDown },
   { to: "/messages", label: "SMS Log", icon: MessageSquare },
   { to: "/settings", label: "Settings", icon: Settings },
 ] as const;
