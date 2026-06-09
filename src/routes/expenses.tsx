@@ -89,7 +89,7 @@ function ExpensesPage() {
       <PageHeader
         title="Expenses & Reports"
         subtitle="Track operating costs and run financial reports across your portfolio."
-        right={
+        action={
           <div className="flex gap-2">
             <Button variant="outline" size="sm" onClick={exportCSV}><Download className="h-4 w-4 mr-1.5" />Export CSV</Button>
             <Dialog open={open} onOpenChange={setOpen}>
