@@ -313,7 +313,7 @@ export const SMS_LOG: SmsMessage[] = [
     to: "+254 733 556 778",
     recipient: "Grace Wanjiru",
     type: "reminder",
-    body: "💰 RENT REMINDER\nGrace, your rent of KES 20,000 is due Dec 10.\nPayment link: pay.lovable/g12",
+    body: "💰 RENT REMINDER\nGrace, your rent of KES 20,000 is due Dec 10.\nPayment link: pay.rentik/g12",
     sentAt: "2024-12-07T08:00:00Z",
   },
   {
