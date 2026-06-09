@@ -67,6 +67,50 @@ export interface MaintenanceRequest {
   assignedTo?: string;
 }
 
+export interface Lease {
+  id: string;
+  tenantId: string;
+  tenantName: string;
+  tenantEmail: string;
+  tenantPhone: string;
+  unitLabel: string;
+  propertyName: string;
+  rent: number;
+  deposit: number;
+  startDate: string; // ISO
+  endDate: string; // ISO
+  status: "active" | "ending_soon" | "expired";
+  documents: { name: string; size: string }[];
+  notes?: string;
+}
+
+export type ExpenseCategory =
+  | "Repairs"
+  | "Utilities"
+  | "Cleaning"
+  | "Security"
+  | "Taxes"
+  | "Insurance"
+  | "Other";
+
+export interface Expense {
+  id: string;
+  date: string; // ISO
+  propertyName: string;
+  category: ExpenseCategory;
+  vendor: string;
+  amount: number;
+  description: string;
+}
+
+export interface Vendor {
+  id: string;
+  name: string;
+  trade: string;
+  phone: string;
+  rating: number; // 1-5
+}
+
 export interface SmsMessage {
   id: string;
   to: string;
