@@ -45,10 +45,54 @@ function Dashboard() {
 
   return (
     <div className="p-6 md:p-10 max-w-7xl mx-auto">
+      <OnboardingTour />
       <PageHeader
         title="Welcome back, John"
         subtitle="Here's what's happening across your 3 properties today."
       />
+
+      {/* Charts row */}
+      <div className="grid lg:grid-cols-3 gap-6 mb-6">
+        <div className="lg:col-span-2 rounded-xl border bg-card p-5 shadow-soft">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h3 className="font-semibold tracking-tight">Revenue trend</h3>
+              <p className="text-xs text-muted-foreground">Last 6 months · KES</p>
+            </div>
+            <span className="text-xs px-2 py-0.5 rounded-full bg-success/10 text-success">+12.4% MoM</span>
+          </div>
+          <ResponsiveContainer width="100%" height={220}>
+            <AreaChart data={REVENUE_TREND}>
+              <defs>
+                <linearGradient id="rev" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.35} />
+                  <stop offset="100%" stopColor="#3b82f6" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
+              <XAxis dataKey="month" tick={{ fontSize: 12 }} stroke="hsl(var(--muted-foreground))" />
+              <YAxis tick={{ fontSize: 12 }} stroke="hsl(var(--muted-foreground))" tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`} />
+              <Tooltip formatter={(v: number) => formatKES(v)} contentStyle={{ borderRadius: 8, border: "1px solid hsl(var(--border))" }} />
+              <Area type="monotone" dataKey="revenue" stroke="#3b82f6" strokeWidth={2.5} fill="url(#rev)" />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div className="rounded-xl border bg-card p-5 shadow-soft">
+          <h3 className="font-semibold tracking-tight">Occupancy trend</h3>
+          <p className="text-xs text-muted-foreground mb-3">Portfolio-wide %</p>
+          <ResponsiveContainer width="100%" height={220}>
+            <LineChart data={OCCUPANCY_TREND}>
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
+              <XAxis dataKey="month" tick={{ fontSize: 12 }} stroke="hsl(var(--muted-foreground))" />
+              <YAxis tick={{ fontSize: 12 }} stroke="hsl(var(--muted-foreground))" domain={[60, 100]} tickFormatter={(v) => `${v}%`} />
+              <Tooltip formatter={(v: number) => `${v}%`} contentStyle={{ borderRadius: 8, border: "1px solid hsl(var(--border))" }} />
+              <Line type="monotone" dataKey="occupancy" stroke="#10b981" strokeWidth={2.5} dot={{ r: 3 }} />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+
 
       {/* Top metrics */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
