@@ -17,6 +17,8 @@ import { Route as PropertiesRouteImport } from './routes/properties'
 import { Route as MessagesRouteImport } from './routes/messages'
 import { Route as MaintenanceRouteImport } from './routes/maintenance'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as LeasesRouteImport } from './routes/leases'
+import { Route as ExpensesRouteImport } from './routes/expenses'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TenantIndexRouteImport } from './routes/tenant.index'
@@ -63,6 +65,16 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LeasesRoute = LeasesRouteImport.update({
+  id: '/leases',
+  path: '/leases',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExpensesRoute = ExpensesRouteImport.update({
+  id: '/expenses',
+  path: '/expenses',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -92,6 +104,8 @@ const TenantMaintenanceRoute = TenantMaintenanceRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
+  '/expenses': typeof ExpensesRoute
+  '/leases': typeof LeasesRoute
   '/login': typeof LoginRoute
   '/maintenance': typeof MaintenanceRoute
   '/messages': typeof MessagesRoute
@@ -107,6 +121,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
+  '/expenses': typeof ExpensesRoute
+  '/leases': typeof LeasesRoute
   '/login': typeof LoginRoute
   '/maintenance': typeof MaintenanceRoute
   '/messages': typeof MessagesRoute
@@ -122,6 +138,8 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
+  '/expenses': typeof ExpensesRoute
+  '/leases': typeof LeasesRoute
   '/login': typeof LoginRoute
   '/maintenance': typeof MaintenanceRoute
   '/messages': typeof MessagesRoute
@@ -139,6 +157,8 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/dashboard'
+    | '/expenses'
+    | '/leases'
     | '/login'
     | '/maintenance'
     | '/messages'
@@ -154,6 +174,8 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/dashboard'
+    | '/expenses'
+    | '/leases'
     | '/login'
     | '/maintenance'
     | '/messages'
@@ -168,6 +190,8 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/dashboard'
+    | '/expenses'
+    | '/leases'
     | '/login'
     | '/maintenance'
     | '/messages'
@@ -184,6 +208,8 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DashboardRoute: typeof DashboardRoute
+  ExpensesRoute: typeof ExpensesRoute
+  LeasesRoute: typeof LeasesRoute
   LoginRoute: typeof LoginRoute
   MaintenanceRoute: typeof MaintenanceRoute
   MessagesRoute: typeof MessagesRoute
@@ -252,6 +278,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/leases': {
+      id: '/leases'
+      path: '/leases'
+      fullPath: '/leases'
+      preLoaderRoute: typeof LeasesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/expenses': {
+      id: '/expenses'
+      path: '/expenses'
+      fullPath: '/expenses'
+      preLoaderRoute: typeof ExpensesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
@@ -308,6 +348,8 @@ const TenantRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRoute,
+  ExpensesRoute: ExpensesRoute,
+  LeasesRoute: LeasesRoute,
   LoginRoute: LoginRoute,
   MaintenanceRoute: MaintenanceRoute,
   MessagesRoute: MessagesRoute,
@@ -320,3 +362,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
