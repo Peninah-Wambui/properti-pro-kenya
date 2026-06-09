@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { USERS, type User } from "./mock-data";
+import { USERS, type User, type UserRole } from "./mock-data";
 
 const STORAGE_KEY = "pms.session";
 
